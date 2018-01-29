@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  web: &app_base
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+      - localstack
+      - redis
+      - mailcatcher
+    volumes:
+      - .:/app
+    command: tail -F -n0 /etc/hosts
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+    volumes:
+    - ./.redis:/data
+  localstack:
+    image: localstack/localstack
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - .mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: nodejs
+      MYSQL_USER: apsis
+      MYSQL_PASSWORD: apsis
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+        - 1025:1025
+        - 1080:1080
