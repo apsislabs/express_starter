@@ -36,3 +36,11 @@ If you look in `docker-compose.yml` you'll notice that we've spun up a number of
 4. **mysql**: Your application's database.
 6. **stripe**: An officially supported stripe mock.
 7. **mailcatcher**: For viewing emails on your local environment.
+
+---
+
+# Built by Apsis
+
+[![apsis](https://s3-us-west-2.amazonaws.com/apsiscdn/apsis.png)](https://www.apsis.io)
+
+`express_starter` was built by Apsis Labs. We love sharing what we build! Check out our [other libraries on Github](https://github.com/apsislabs), and if you like our work you can [hire us](https://www.apsis.io/work-with-us/) to build your vision.
