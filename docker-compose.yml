@@ -1,37 +1,39 @@
-version: '3'
+version: "3.1"
 
 services:
-  web: &app_base
-    build: .
+  server: &shared
+    build:
+      context: ./server
+      args:
+        - NODE_ENV=development
+    command: npm run dev
     ports:
-      - "3000:3000"
+      - "4000:80"
     depends_on:
-      - mysql
-      - localstack
-      - redis
-      - mailcatcher
+      - db
     volumes:
-      - .:/app
-    command: tail -F -n0 /etc/hosts
-  redis:
-    image: redis
-    command: redis-server --appendonly yes
-    volumes:
-    - ./.redis:/data
-  localstack:
-    image: localstack/localstack
-  mysql:
-    image: mysql:5.7
-    volumes:
-      - .mysql:/var/lib/mysql
-    restart: always
+      - ./server/:/app:cached
+      - server_node_modules:/app/node_modules
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: nodejs
-      MYSQL_USER: apsis
-      MYSQL_PASSWORD: apsis
-  mailcatcher:
-    image: yappabe/mailcatcher
-    ports:
-        - 1025:1025
-        - 1080:1080
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DB: starterapp
+      DB_USER: starterapp
+      DB_PASS: mypassword
+      HOSTNAME: localhost
+      PORT: 80
+      LOG_SQL: "true"
+      LOG_LEVEL: debug
+
+  db:
+    image: postgres:12.6
+    environment:
+      - POSTGRES_DB=starterapp
+      - POSTGRES_USER=starterapp
+      - POSTGRES_PASSWORD=mypassword
+    volumes:
+      - psql:/var/lib/postgres:delegated
+
+volumes:
+  psql:
+  server_node_modules:
