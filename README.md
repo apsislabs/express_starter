@@ -28,6 +28,12 @@ The docker-compose maps the server to port `80` on the host. You may want to mov
 
 `bin/ssh_to_container`
 
+### Running unit tests
+
+From inside the container:
+
+`npm test`
+
 ### Connecting to the database
 
 From inside the container run:
