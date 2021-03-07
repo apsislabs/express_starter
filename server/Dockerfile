@@ -10,7 +10,9 @@ ENV NODE_ENV $NODE_ENV
 RUN npm i npm@latest -g
 
 # install psql and other utilities
-RUN apt update && apt install -y postgresql-client
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
+RUN apt update && apt install -y postgresql-client-12
 
 # Create workdir directory
 RUN mkdir -p /app
