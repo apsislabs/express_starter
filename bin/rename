@@ -6,6 +6,7 @@ OLD="${2:-starterapp}"
 
 echo "renaming $OLD -> $1"
 
+perl -i -pe"s/$OLD/$1/g" README.md
 perl -i -pe"s/$OLD/$1/g" docker-compose.yml
 perl -i -pe"s/$OLD/$1/g" server/package-lock.json
 perl -i -pe"s/$OLD/$1/g" server/package.json
