@@ -1,12 +1,2 @@
-# OSX
-.DS_Store
-
-.mysql/
-.redis/
 node_modules/
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-
-# Local Env
-.local.override.env
+coverage/
